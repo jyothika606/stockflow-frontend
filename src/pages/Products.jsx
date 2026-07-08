@@ -1,4 +1,5 @@
 import { useEffect, useState } from "react";
+import { Link } from "react-router-dom";
 import api from "../services/api";
 
 function Products() {
@@ -51,7 +52,7 @@ function Products() {
 
       setForm(emptyForm);
       setEditingId(null);
-      loadProducts();
+      await loadProducts();
     } catch (err) {
       console.log(err);
       alert("Operation failed");
@@ -77,7 +78,7 @@ function Products() {
 
     try {
       await api.delete(`/products/${id}`);
-      loadProducts();
+      await loadProducts();
     } catch (err) {
       console.log(err);
       alert("Delete failed");
@@ -87,6 +88,16 @@ function Products() {
   return (
     <div style={{ padding: "30px" }}>
       <h1>Products</h1>
+
+      <div style={{ marginBottom: "20px" }}>
+        <Link to="/dashboard">
+          <button>Dashboard</button>
+        </Link>
+
+        <Link to="/settings">
+          <button style={{ marginLeft: "10px" }}>Settings</button>
+        </Link>
+      </div>
 
       <form onSubmit={handleSubmit}>
         <input
@@ -144,7 +155,8 @@ function Products() {
           onChange={handleChange}
         />
 
-        <br /><br />
+        <br />
+        <br />
 
         <button type="submit">
           {editingId ? "Update Product" : "Add Product"}

@@ -8,10 +8,15 @@ function Dashboard() {
     totalQuantity: 0,
     lowStockProducts: 0,
   });
+useEffect(() => {
+  loadDashboard();
 
-  useEffect(() => {
-    loadDashboard();
-  }, []);
+  const onFocus = () => loadDashboard();
+
+  window.addEventListener("focus", onFocus);
+
+  return () => window.removeEventListener("focus", onFocus);
+}, []);
 
   const loadDashboard = async () => {
     try {
